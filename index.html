@@ -1,1 +1,192 @@
-<h1>Скоро тут будет нечто классное</h1>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уже скоро...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Плашка с таймером */
+        .timer-card {
+            background: linear-gradient(135deg, #eef3f7 0%, #e6edf2 100%);
+            border-radius: 48px;
+            padding: 48px 40px;
+            text-align: center;
+            border: 1px solid #d4e0e8;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        .timer-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #5f7f8c;
+            margin-bottom: 16px;
+        }
+
+        .timer-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 32px;
+        }
+
+        .timer-title span {
+            color: #6c9eb3;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .countdown-item {
+            background: white;
+            border-radius: 28px;
+            padding: 24px 20px;
+            min-width: 100px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #cbdbe0;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4a6f7a;
+            line-height: 1;
+            font-feature-settings: "tnum";
+        }
+
+        .countdown-label {
+            font-size: 0.85rem;
+            color: #6b7e94;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .launch-date {
+            background: white;
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a6f7a;
+        }
+
+        .launch-date i {
+            margin-right: 8px;
+            color: #e67e22;
+        }
+
+        @media (max-width: 480px) {
+            .timer-card {
+                padding: 32px 24px;
+            }
+
+            .countdown-item {
+                min-width: 70px;
+                padding: 16px 12px;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .timer-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="timer-card">
+        <div class="timer-label">
+            <i class="fas fa-hourglass-half"></i> До запуска осталось
+        </div>
+        
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">--</div>
+                <div class="countdown-label">дней</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">--</div>
+                <div class="countdown-label">часов</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">--</div>
+                <div class="countdown-label">минут</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">--</div>
+                <div class="countdown-label">секунд</div>
+            </div>
+        </div>
+        <div class="launch-date">
+            <i class="fas fa-calendar-alt"></i> Запуск: 24 марта 2026, 10:00
+        </div>
+    </div>
+
+    <script>
+        // Дата запуска: 24 марта 2026, 10:00
+        const launchDate = new Date(2026, 2, 24, 10, 0, 0);
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = launchDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').textContent = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').textContent = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+
+</html>
